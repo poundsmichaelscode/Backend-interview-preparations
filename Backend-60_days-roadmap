@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>60-Day Node.js Backend Engineering Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0e0f;--surface:#16161a;--surface2:#1e1e24;--border:#2a2a35;--border2:#3a3a48;
+  --green:#00d97e;--green-dim:#00d97e22;--green-mid:#00d97e55;
+  --amber:#f5a623;--amber-dim:#f5a62322;
+  --blue:#4da6ff;--blue-dim:#4da6ff22;
+  --red:#ff5f5f;--red-dim:#ff5f5f22;
+  --purple:#a78bfa;--purple-dim:#a78bfa22;
+  --cyan:#22d3ee;--cyan-dim:#22d3ee22;
+  --text:#e8e8f0;--text2:#8888a0;--text3:#55556a;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+  --radius:6px;--radius-lg:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh}
+.page{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+
+/* header */
+.header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.title-block h1{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--green);letter-spacing:-0.5px;margin-bottom:4px}
+.title-block h1 span{color:var(--text2)}
+.title-block p{font-size:13px;color:var(--text2);max-width:500px;line-height:1.5}
+.reset-btn{font-family:var(--mono);font-size:11px;padding:5px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:transparent;color:var(--text3);cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.reset-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* progress */
+.progress-section{margin-top:1.25rem}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.progress-meta span{font-family:var(--mono);font-size:12px;color:var(--text2)}
+.progress-meta .pct{color:var(--green);font-weight:500}
+.progress-track{height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+.progress-fill{height:3px;background:var(--green);border-radius:99px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);box-shadow:0 0 8px var(--green-mid)}
+.phase-stats{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem}
+.stat{font-family:var(--mono);font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px}
+.stat-dot{width:6px;height:6px;border-radius:50%}
+
+/* tabs */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:var(--radius);border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.tab:hover{border-color:var(--border2);color:var(--text2)}
+.tab.active{background:var(--green-dim);border-color:var(--green-mid);color:var(--green)}
+
+/* detail panel */
+.detail{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.5rem;animation:slideIn 0.15s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.detail-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:1rem}
+.detail-day-badge{font-family:var(--mono);font-size:11px;font-weight:500;padding:4px 10px;border-radius:var(--radius);white-space:nowrap;flex-shrink:0}
+.detail-title{font-size:15px;font-weight:500;color:var(--text);line-height:1.4}
+.detail-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem}
+.dtag{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:var(--radius);border:1px solid var(--border2);color:var(--text2);background:var(--surface2)}
+.detail-tasks{margin-bottom:1rem}
+.detail-tasks h4{font-family:var(--mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.task-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.task-list li{font-size:13px;color:var(--text2);padding-left:16px;position:relative}
+.task-list li::before{content:"→";position:absolute;left:0;color:var(--text3);font-family:var(--mono)}
+.detail-btns{display:flex;gap:8px;flex-wrap:wrap}
+.detail-btns button{font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:var(--radius);border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all 0.15s}
+.detail-btns button:hover{border-color:var(--border2);color:var(--text)}
+.detail-btns .btn-done{border-color:var(--green-mid);color:var(--green);background:var(--green-dim)}
+.detail-btns .btn-done:hover{background:var(--green-dim)}
+.detail-btns .btn-undone{border-color:var(--border2);color:var(--text2)}
+.detail-btns .btn-close{margin-left:auto}
+
+/* phase block */
+.phase-block{margin-bottom:2.5rem}
+.phase-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+.phase-label{font-family:var(--mono);font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px}
+.phase-name{font-size:14px;font-weight:400;color:var(--text)}
+.phase-range{font-family:var(--mono);font-size:11px;color:var(--text3);margin-left:auto;white-space:nowrap}
+.phase-done-count{font-family:var(--mono);font-size:11px;color:var(--text2)}
+
+/* grid */
+.days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:7px;margin-bottom:1rem}
+.day-card{border:1px solid var(--border);border-radius:var(--radius);padding:10px 11px;cursor:pointer;transition:all 0.15s;background:var(--surface);position:relative;overflow:hidden}
+.day-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.15s}
+.day-card:hover{border-color:var(--border2)}
+.day-card:hover::before{opacity:1}
+.day-card.done{border-color:var(--green-mid);background:var(--green-dim)}
+.day-card.done .d-num{color:var(--green)}
+.day-card.done .d-topic{color:var(--green);opacity:0.85}
+.day-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue-dim)}
+.d-num{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px;font-weight:500}
+.d-topic{font-size:12px;color:var(--text2);line-height:1.4}
+.d-check{position:absolute;top:8px;right:8px;width:14px;height:14px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s}
+.day-card.done .d-check{opacity:1}
+.d-check svg{width:8px;height:8px;stroke:#000;stroke-width:3;fill:none}
+
+/* milestone */
+.milestone{font-family:var(--mono);font-size:12px;color:var(--text2);padding:10px 14px;background:var(--surface2);border-left:2px solid;border-radius:0 var(--radius) var(--radius) 0;line-height:1.5}
+.milestone strong{font-weight:500}
+
+@media(max-width:520px){.days-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.phase-name{display:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-top">
+      <div class="title-block">
+        <h1><span>$ </span>node --roadmap <span style="color:var(--amber)">60days</span></h1>
+        <p>Backend engineering with Node.js — from server fundamentals to senior-level architecture, APIs, databases, DevOps, and system design.</p>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">reset progress</button>
+    </div>
+    <div class="progress-section">
+      <div class="progress-meta">
+        <span id="plabel">0 / 60 days completed</span>
+        <span class="pct" id="ppct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
+      <div class="phase-stats" id="phase-stats"></div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="detail-area"></div>
+  <div id="phase-area"></div>
+</div>
+
+<script>
+const PHASES = [
+  {
+    id:"p1", label:"Phase 1", name:"Node.js & JS Foundations", range:"Days 1–10",
+    color:"#00d97e", dim:"#00d97e22", mid:"#00d97e55", text:"#00d97e",
+    desc:"JavaScript runtime, core Node.js APIs, async patterns, and developer tooling",
+    milestone:"10 CLI tools and scripts committed to GitHub. Confident with Node.js core and async JS.",
+    days:[
+      {d:1,topic:"How Node.js works",tags:["V8 engine","Event loop","libuv","Single-threaded","Non-blocking I/O"],
+       tasks:["Understand Node.js architecture vs browser JS","Explore the call stack, callback queue, microtask queue","Read Node.js internals docs","Build: hello-world server with http module"]},
+      {d:2,topic:"JavaScript fundamentals for backend",tags:["Closures","Prototypes","ES6+","Modules","Error types"],
+       tasks:["Master closures, this, prototype chain","ES modules vs CommonJS","Error handling with try/catch","Build: reusable utility module library"]},
+      {d:3,topic:"Async JS — callbacks, promises, async/await",tags:["Callbacks","Promises","async/await","Promise.all","Error propagation"],
+       tasks:["Callback hell and how to escape it","Promise chaining and error handling","async/await patterns","Build: async file reader and promise chain examples"]},
+      {d:4,topic:"Node.js core modules",tags:["fs","path","os","events","stream","url","crypto"],
+       tasks:["File system: read, write, stream, watch","EventEmitter pattern","Crypto basics for hashing","Build: file watcher CLI tool"]},
+      {d:5,topic:"npm, package.json, CLI tools",tags:["npm","package.json","scripts","npx","semver","global packages"],
+       tasks:["package.json anatomy","npm scripts for dev workflows","Build and publish a CLI tool with commander.js","Set up ESLint + Prettier + Husky"]},
+      {d:6,topic:"Streams and buffers",tags:["Readable","Writable","Transform","Pipe","Backpressure","Buffer"],
+       tasks:["Understand stream types and pipe()","Backpressure and when it matters","Build: CSV file processor using transform streams","Build: file compression with zlib streams"]},
+      {d:7,topic:"Worker threads and child processes",tags:["worker_threads","child_process","cluster","CPU-bound tasks","IPC"],
+       tasks:["When to use worker threads vs cluster","Spawn vs exec vs fork","Build: CPU-intensive task offloader","Build: multi-process image resize simulation"]},
+      {d:8,topic:"TypeScript for Node.js",tags:["ts-node","tsconfig","types","Declaration files","Path aliases"],
+       tasks:["Set up TypeScript Node.js project","tsconfig for strict backend development","Type-safe environment variables with zod","Build: convert a JS project to TypeScript"]},
+      {d:9,topic:"Testing fundamentals",tags:["Jest","Vitest","Unit tests","Mocking","Test coverage","TDD"],
+       tasks:["Jest vs Vitest for Node.js","Unit test async functions","Mock fs, http, third-party modules","Build: full test suite for your utility module"]},
+      {d:10,topic:"Debugging + profiling Node.js",tags:["--inspect","Chrome DevTools","clinic.js","heapdump","CPU profile"],
+       tasks:["Node.js inspector and breakpoints","CPU and memory profiling","Identify memory leaks","Build: intentional leak demo and fix it"]},
+    ]
+  },
+  {
+    id:"p2", label:"Phase 2", name:"HTTP, REST APIs & Express", range:"Days 11–20",
+    color:"#4da6ff", dim:"#4da6ff22", mid:"#4da6ff55", text:"#4da6ff",
+    desc:"HTTP deep dive, REST design, Express.js, validation, auth, and API security",
+    milestone:"Production-ready REST API with auth, validation, tests, and documentation deployed.",
+    days:[
+      {d:11,topic:"HTTP protocol deep dive",tags:["Methods","Status codes","Headers","Cookies","CORS","Keep-alive"],
+       tasks:["HTTP/1.1 vs HTTP/2 differences","Request/response lifecycle","CORS — preflight, headers, credentials","Build: raw http module server with routing"]},
+      {d:12,topic:"Express.js fundamentals",tags:["Router","Middleware","req/res","Error handling","Static files"],
+       tasks:["Express app structure","Middleware chain and order matters","Custom error handler middleware","Build: CRUD API for a resource (books, products)"]},
+      {d:13,topic:"REST API design principles",tags:["Resource naming","Versioning","HTTP verbs","Pagination","HATEOAS"],
+       tasks:["RESTful naming conventions","Query params: filter, sort, paginate","API versioning strategies","Build: fully RESTful product catalog API"]},
+      {d:14,topic:"Input validation + sanitization",tags:["Zod","Joi","express-validator","Schema validation","XSS prevention"],
+       tasks:["Validate request body, params, query strings","Schema-first validation with Zod","Sanitize user input to prevent injection","Build: validated user registration endpoint"]},
+      {d:15,topic:"Authentication — JWT + sessions",tags:["JWT","bcrypt","Sessions","httpOnly cookies","Refresh tokens"],
+       tasks:["Password hashing with bcrypt","JWT access + refresh token pattern","Session-based auth with express-session","Build: complete auth system (register, login, logout, refresh)"]},
+      {d:16,topic:"Authorization + RBAC",tags:["Roles","Permissions","Middleware guards","Resource ownership","ABAC"],
+       tasks:["Role-based access control middleware","Check resource ownership","Permission matrices","Build: multi-role API (admin, editor, viewer)"]},
+      {d:17,topic:"API security",tags:["Helmet.js","Rate limiting","CORS","SQL injection","XSS","CSRF","API keys"],
+       tasks:["Helmet.js security headers","Rate limiting with express-rate-limit","CSRF protection","Build: security audit and harden your existing API"]},
+      {d:18,topic:"File uploads + multipart",tags:["Multer","File type validation","S3 upload","Sharp","Storage strategies"],
+       tasks:["Single and multiple file upload","Validate file type and size","Stream uploads to S3/cloud storage","Build: avatar upload endpoint with image resize"]},
+      {d:19,topic:"API documentation",tags:["OpenAPI","Swagger UI","swagger-jsdoc","Postman","API versioning"],
+       tasks:["Write OpenAPI 3.0 spec","Auto-generate docs with swagger-jsdoc","Postman collection with environments","Build: fully documented API with Swagger UI"]},
+      {d:20,topic:"Testing REST APIs",tags:["Supertest","Jest","Test DB","Fixtures","Integration tests","Mocking"],
+       tasks:["Integration tests with supertest","Test DB setup and teardown","Mock external services","Build: full integration test suite for your auth API"]},
+    ]
+  },
+  {
+    id:"p3", label:"Phase 3", name:"Databases & Data Layer", range:"Days 21–30",
+    color:"#f5a623", dim:"#f5a62322", mid:"#f5a62355", text:"#f5a623",
+    desc:"SQL, NoSQL, ORMs, caching, migrations, transactions, and data modeling",
+    milestone:"Data layer with PostgreSQL, Redis caching, migrations, and type-safe queries production-ready.",
+    days:[
+      {d:21,topic:"PostgreSQL fundamentals",tags:["SQL","Tables","Joins","Indexes","Constraints","Transactions","EXPLAIN"],
+       tasks:["Schema design for a real-world domain","JOINs: inner, left, right, full","Indexes: B-tree, partial, composite","Build: schema for an ecommerce or SaaS app"]},
+      {d:22,topic:"Prisma ORM",tags:["Schema","Migrations","Relations","Type-safe queries","Prisma Client"],
+       tasks:["Model relationships: 1:1, 1:N, M:N","Run migrations with Prisma Migrate","Type-safe CRUD with Prisma Client","Build: fully typed data access layer"]},
+      {d:23,topic:"Advanced SQL patterns",tags:["CTEs","Window functions","Aggregates","Subqueries","Views","Stored procs"],
+       tasks:["Write CTEs for complex reports","Window functions: rank, lead, lag","Materialized views","Build: reporting queries for a dashboard"]},
+      {d:24,topic:"MongoDB + Mongoose",tags:["Documents","Collections","Schema","Aggregation pipeline","Indexes","Atlas"],
+       tasks:["Document modeling vs relational","Aggregation pipeline stages","Compound indexes and text search","Build: flexible content API with MongoDB"]},
+      {d:25,topic:"Database transactions + concurrency",tags:["ACID","Isolation levels","Pessimistic locking","Optimistic locking","Deadlocks"],
+       tasks:["Transaction isolation levels explained","Optimistic vs pessimistic concurrency","Detect and resolve deadlocks","Build: seat booking system with concurrency control"]},
+      {d:26,topic:"Redis — caching + data structures",tags:["String","Hash","List","Set","Sorted set","TTL","Pub/Sub"],
+       tasks:["Cache-aside, write-through, write-back patterns","Session storage with Redis","Rate limiting with Redis","Build: API response caching layer"]},
+      {d:27,topic:"Database migrations + seeding",tags:["Prisma Migrate","Flyway","Rollback","Seed scripts","CI migrations"],
+       tasks:["Zero-downtime migration strategies","Safe column changes (add nullable first)","Seed data for testing and dev","Build: migration CI pipeline"]},
+      {d:28,topic:"Search — full-text and beyond",tags:["PostgreSQL FTS","Elasticsearch","MeiliSearch","Typesense","Ranking"],
+       tasks:["PostgreSQL tsvector and tsquery","Setup MeiliSearch or Typesense","Fuzzy search and typo tolerance","Build: product search with facets"]},
+      {d:29,topic:"Database performance + query optimization",tags:["EXPLAIN ANALYZE","N+1 problem","Connection pooling","PgBouncer","Indexing strategy"],
+       tasks:["Use EXPLAIN ANALYZE to find slow queries","Solve N+1 with includes/joins","Configure PgBouncer connection pool","Build: optimize a deliberately slow API"]},
+      {d:30,topic:"Data modeling patterns",tags:["Normalization","Denormalization","Event sourcing","Outbox pattern","Soft delete"],
+       tasks:["When to denormalize for performance","Soft delete vs hard delete","Outbox pattern for reliable events","Build: audit log system"]},
+    ]
+  },
+  {
+    id:"p4", label:"Phase 4", name:"Advanced APIs & Real-Time", range:"Days 31–40",
+    color:"#a78bfa", dim:"#a78bfa22", mid:"#a78bfa55", text:"#a78bfa",
+    desc:"GraphQL, WebSockets, gRPC, message queues, email, payments, and webhooks",
+    milestone:"Real-time features, GraphQL API, and async message queue system live and tested.",
+    days:[
+      {d:31,topic:"GraphQL with Node.js",tags:["Apollo Server","Schema","Resolvers","DataLoader","Mutations","Subscriptions"],
+       tasks:["Schema-first GraphQL with type-defs","Resolver chain and context","N+1 with DataLoader","Build: GraphQL API for a blog or product catalog"]},
+      {d:32,topic:"WebSockets + real-time",tags:["Socket.io","ws","Rooms","Namespaces","Reconnection","Presence"],
+       tasks:["Socket.io rooms and namespaces","Auth handshake for WebSocket connections","Horizontal scaling with Redis adapter","Build: real-time chat or notification system"]},
+      {d:33,topic:"Server-Sent Events + polling",tags:["SSE","EventSource","Long polling","Streaming responses","Live updates"],
+       tasks:["SSE vs WebSockets trade-offs","Stream response with res.write()","Reconnect logic client-side","Build: live dashboard with SSE"]},
+      {d:34,topic:"Message queues + background jobs",tags:["BullMQ","RabbitMQ","Redis Queue","Workers","Job retry","Dead letter"],
+       tasks:["BullMQ queues, workers, and concurrency","Job priorities and retry strategies","Dead letter queue for failed jobs","Build: email send queue with retry logic"]},
+      {d:35,topic:"Email integration",tags:["Nodemailer","Resend","React Email","Templates","DKIM","Transactional vs bulk"],
+       tasks:["SMTP vs API-based email","HTML email templates","DKIM and SPF setup","Build: welcome, password reset, and invoice emails"]},
+      {d:36,topic:"Payments — Stripe backend",tags:["Stripe SDK","Payment intents","Webhooks","Subscriptions","Idempotency"],
+       tasks:["Payment intent flow","Webhook signature verification","Handle subscription lifecycle events","Build: checkout + subscription backend"]},
+      {d:37,topic:"Third-party API integration patterns",tags:["Retry logic","Circuit breaker","SDK wrapping","OAuth 2.0","Webhook ingestion"],
+       tasks:["Build a resilient HTTP client with retry","Circuit breaker pattern","Ingest and verify webhooks securely","Build: GitHub OAuth integration"]},
+      {d:38,topic:"gRPC and Protocol Buffers",tags:["Proto files","Unary","Streaming","gRPC-js","Service contracts","Code generation"],
+       tasks:["Define services with .proto files","Unary and streaming RPC","Generate TypeScript types from proto","Build: internal gRPC service for user lookup"]},
+      {d:39,topic:"Cron jobs + scheduled tasks",tags:["node-cron","Agenda","BullMQ repeatable","Idempotency","Distributed locking"],
+       tasks:["Safe cron with idempotency keys","Distributed lock to prevent double execution","Monitor job execution","Build: scheduled report generator"]},
+      {d:40,topic:"Rate limiting + throttling",tags:["Token bucket","Sliding window","Redis rate limiter","API quotas","Per-user limits"],
+       tasks:["Token bucket vs sliding window counter","Per-user and per-IP limits","Return Retry-After headers","Build: tiered rate limiter by subscription plan"]},
+    ]
+  },
+  {
+    id:"p5", label:"Phase 5", name:"Architecture & DevOps", range:"Days 41–50",
+    color:"#22d3ee", dim:"#22d3ee22", mid:"#22d3ee55", text:"#22d3ee",
+    desc:"System architecture, microservices, Docker, CI/CD, cloud deployment, and observability",
+    milestone:"Dockerized backend deployed to cloud with CI/CD, logging, and monitoring in place.",
+    days:[
+      {d:41,topic:"Application architecture patterns",tags:["MVC","Layered architecture","Clean architecture","DDD basics","Repository pattern"],
+       tasks:["Layered: controllers, services, repositories","Dependency injection pattern in Node.js","Domain-driven design concepts","Refactor an app to clean architecture"]},
+      {d:42,topic:"Microservices fundamentals",tags:["Service decomposition","API gateway","Service discovery","Inter-service comms","Bounded context"],
+       tasks:["When to go microservices (and when not to)","API Gateway pattern with Express or Nginx","Sync vs async inter-service communication","Build: split monolith into 2 services"]},
+      {d:43,topic:"Docker for Node.js",tags:["Dockerfile","Multi-stage build","docker-compose","Volumes","Networks","Health checks"],
+       tasks:["Optimized Node.js Dockerfile","Multi-stage for smaller prod images","docker-compose for local dev stack","Build: containerized Node + Postgres + Redis stack"]},
+      {d:44,topic:"CI/CD pipelines",tags:["GitHub Actions","Test → Lint → Build → Deploy","Secrets","Environments","Rollback"],
+       tasks:["GitHub Actions workflow for Node.js","Run tests, lint, build in CI","Deploy to cloud on merge to main","Build: full CI/CD pipeline with preview envs"]},
+      {d:45,topic:"Cloud deployment",tags:["Railway","Render","AWS EC2","Fly.io","Environment variables","SSL","Domain"],
+       tasks:["Deploy to Railway or Render","Configure environment variables securely","Set up custom domain with SSL","Zero-downtime deployment strategies"]},
+      {d:46,topic:"Logging + structured logging",tags:["Pino","Winston","Log levels","Correlation IDs","JSON logs","Log aggregation"],
+       tasks:["Structured JSON logging with Pino","Request ID / correlation ID per request","Log to stdout, aggregate with Loki or Datadog","Build: request logging middleware"]},
+      {d:47,topic:"Monitoring + alerting",tags:["Prometheus","Grafana","Sentry","Uptime checks","Alerts","Custom metrics"],
+       tasks:["Expose /metrics with prom-client","Grafana dashboard for API latency","Sentry for error tracking","Build: alerting on error rate spike"]},
+      {d:48,topic:"API gateway + reverse proxy",tags:["Nginx","Traefik","Rate limiting","Load balancing","SSL termination","Path routing"],
+       tasks:["Nginx reverse proxy config for Node.js","SSL termination at gateway","Load balance between Node instances","Build: multi-service routing with Nginx"]},
+      {d:49,topic:"Secrets management + config",tags:["dotenv","Vault","AWS Secrets Manager","12-factor app","Config validation"],
+       tasks:["Validate env vars at startup with Zod","Never commit secrets (git-secrets)","Vault or AWS Secrets Manager basics","Build: typed config module with startup validation"]},
+      {d:50,topic:"Performance + load testing",tags:["autocannon","Artillery","k6","Bottleneck identification","Horizontal scaling"],
+       tasks:["Load test API with autocannon or k6","Identify and fix bottlenecks","Horizontal scaling with PM2 cluster","Build: performance report before/after optimization"]},
+    ]
+  },
+  {
+    id:"p6", label:"Phase 6", name:"Senior Engineering", range:"Days 51–60",
+    color:"#ff5f5f", dim:"#ff5f5f22", mid:"#ff5f5f55", text:"#ff5f5f",
+    desc:"Security hardening, system design, event-driven architecture, DX, and interview readiness",
+    milestone:"Senior-ready: production system design portfolio, two backend projects, interview confident.",
+    days:[
+      {d:51,topic:"Security hardening",tags:["OWASP Top 10","SQL injection","Mass assignment","Dependency audit","Secrets rotation","Pen testing basics"],
+       tasks:["Audit API against OWASP Top 10","npm audit + Snyk dependency scan","Prevent mass assignment with allowlists","Build: security checklist for your projects"]},
+      {d:52,topic:"Event-driven architecture",tags:["Event sourcing","CQRS","Domain events","Outbox pattern","Sagas","Eventual consistency"],
+       tasks:["Event sourcing basics with an append-only log","CQRS: separate read and write models","Saga pattern for distributed transactions","Build: order processing saga with BullMQ"]},
+      {d:53,topic:"Advanced caching strategies",tags:["Cache invalidation","Write-through","Cache stampede","CDN caching","Edge caching"],
+       tasks:["Cache invalidation strategies compared","Prevent cache stampede with locking","CDN + application cache layering","Build: multi-layer caching for a feed API"]},
+      {d:54,topic:"Multi-tenancy architecture",tags:["Row-level security","Schema-per-tenant","Tenant isolation","Feature flags","Billing gates"],
+       tasks:["Row-level security in PostgreSQL","Tenant context middleware","Tenant-aware migrations","Build: multi-tenant SaaS API skeleton"]},
+      {d:55,topic:"Backend system design practice",tags:["URL shortener","Twitter clone","Uber backend","Notification system","Rate limiter"],
+       tasks:["Design a URL shortener at scale","Design a notification system (push, email, SMS)","Design a real-time leaderboard","Practice structured system design answers"]},
+      {d:56,topic:"API versioning + backwards compatibility",tags:["URI versioning","Header versioning","Deprecation","Changelog","Sunset header"],
+       tasks:["Strategy: URI vs header versioning","Deprecation notices and Sunset header","Maintain v1 while shipping v2","Build: versioned API migration guide"]},
+      {d:57,topic:"Developer experience + DX",tags:["SDK generation","OpenAPI","Type generation","Error messages","Onboarding docs","Changelog"],
+       tasks:["Auto-generate SDK from OpenAPI spec","Clear, actionable API error messages","Write onboarding guide for new contributors","Build: contributor guide and ADR examples"]},
+      {d:58,topic:"Open source + community",tags:["Good first issues","Semantic versioning","npm publish","Changelogs","RFC process"],
+       tasks:["Publish a Node.js utility package to npm","Write changelog with conventional commits","Triage issues and review PRs","Contribute to an open source Node.js project"]},
+      {d:59,topic:"Interview preparation",tags:["JS runtime questions","System design","Coding problems","Behavioural","Salary negotiation"],
+       tasks:["Review top 50 Node.js interview questions","Practice 2 system design problems","Solve 10 LeetCode medium (graphs, DP)","Polish resume and GitHub profile"]},
+      {d:60,topic:"Final project + demo day",tags:["Portfolio","Live demo","Architecture diagram","Case study","Video walkthrough"],
+       tasks:["Record a 5-minute demo of your main project","Write architecture decision records (ADRs)","Add Lighthouse/performance score to README","Final mock interview: technical + system design + behavioural"]},
+    ]
+  }
+];
+
+const KEY="nodejs60_v1";
+let done=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
+let active="all";
+let sel=null;
+
+function save(){localStorage.setItem(KEY,JSON.stringify([...done]))}
+
+function renderProgress(){
+  const pct=Math.round((done.size/60)*100);
+  document.getElementById("pbar").style.width=pct+"%";
+  document.getElementById("plabel").textContent=`${done.size} / 60 days completed`;
+  document.getElementById("ppct").textContent=pct+"%";
+  const stats=document.getElementById("phase-stats");
+  stats.innerHTML=PHASES.map(p=>{
+    const pd=p.days.filter(d=>done.has(d.d)).length;
+    return `<span class="stat"><span class="stat-dot" style="background:${p.color}"></span><span style="color:${p.color}">${p.label}</span><span>${pd}/${p.days.length}</span></span>`;
+  }).join("");
+}
+
+function renderTabs(){
+  const c=document.getElementById("tabs");
+  c.innerHTML=`<button class="tab ${active==='all'?'active':''}" onclick="setPhase('all')">$ all phases</button>`+
+    PHASES.map(p=>`<button class="tab ${active===p.id?'active':''}" style="${active===p.id?`background:${p.dim};border-color:${p.mid};color:${p.color}`:''}" onclick="setPhase('${p.id}')">${p.label}: ${p.name}</button>`).join("");
+}
+
+function renderDetail(){
+  const a=document.getElementById("detail-area");
+  if(!sel){a.innerHTML="";return}
+  let fd=null,fp=null;
+  for(const p of PHASES)for(const d of p.days)if(d.d===sel){fd=d;fp=p;break}
+  if(!fd){a.innerHTML="";return}
+  const id=done.has(sel);
+  a.innerHTML=`<div class="detail">
+    <div class="detail-header">
+      <span class="detail-day-badge" style="background:${fp.dim};color:${fp.text};border:1px solid ${fp.mid}">Day ${sel} · ${fp.name}</span>
+      <div class="detail-title">${fd.topic}</div>
+    </div>
+    <div class="detail-tags">${fd.tags.map(t=>`<span class="dtag">${t}</span>`).join("")}</div>
+    <div class="detail-tasks">
+      <h4>Hands-on tasks</h4>
+      <ul class="task-list">${fd.tasks.map(t=>`<li>${t}</li>`).join("")}</ul>
+    </div>
+    <div class="detail-btns">
+      <button class="${id?'btn-done':'btn-undone'}" onclick="toggleDay(${sel})">${id?'✓ completed — mark incomplete':'Mark as done'}</button>
+      <button onclick="window.open('https://claude.ai/new?q='+encodeURIComponent('Give me a complete Node.js study guide and project tasks for Day ${sel}: ${fd.topic}. Include code examples, best practices, and common interview questions.'),'_blank')">get study guide →</button>
+      <button onclick="window.open('https://claude.ai/new?q='+encodeURIComponent('Give me 10 backend Node.js interview questions for: ${fd.topic}, with detailed answers.'),'_blank')">interview Q&A →</button>
+      <button class="btn-close" onclick="sel=null;renderDetail();renderPhases()">close ✕</button>
+    </div>
+  </div>`;
+}
+
+function renderPhases(){
+  const a=document.getElementById("phase-area");
+  const ps=active==="all"?PHASES:PHASES.filter(p=>p.id===active);
+  a.innerHTML=ps.map(p=>{
+    const pd=p.days.filter(d=>done.has(d.d)).length;
+    const cards=p.days.map(d=>{
+      const id=done.has(d.d);const is_sel=sel===d.d;
+      return `<div class="day-card ${id?'done':''} ${is_sel?'selected':''}" onclick="selectDay(${d.d})">
+        <div class="d-num" style="${id?'':'color:var(--text3)'}">day_${String(d.d).padStart(2,'0')}</div>
+        <div class="d-topic">${d.topic}</div>
+        <div class="d-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+      </div>`;
+    }).join("");
+    return `<div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-label" style="background:${p.dim};color:${p.text};border:1px solid ${p.mid}">${p.label}</span>
+        <span class="phase-name">${p.name}</span>
+        <span class="phase-done-count" style="color:${p.text}">${pd}/${p.days.length}</span>
+        <span class="phase-range">${p.range}</span>
+      </div>
+      <div class="days-grid">${cards}</div>
+      <div class="milestone" style="border-color:${p.text}"><strong style="color:${p.text}">milestone //</strong> ${p.milestone}</div>
+    </div>`;
+  }).join("");
+}
+
+function setPhase(id){active=id;renderTabs();renderPhases()}
+function selectDay(d){sel=sel===d?null:d;renderDetail();renderPhases()}
+function toggleDay(d){if(done.has(d))done.delete(d);else done.add(d);save();renderProgress();renderDetail();renderPhases()}
+function resetAll(){if(confirm("Reset all progress?")){done=new Set();save();renderProgress();renderDetail();renderPhases()}}
+
+renderProgress();renderTabs();renderDetail();renderPhases();
+</script>
+</body>
+</html>
