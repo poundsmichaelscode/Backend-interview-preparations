@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>60-Day Python Backend Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0f12;--surface:#17171c;--surface2:#1e1e26;--border:#252530;--border2:#32323f;
+  --py-yellow:#ffd343;--py-blue:#4b8bbe;
+  --django-green:#0c4b33;--django-green-light:#44b78b;
+  --flask-red:#ff6b6b;--flask-red-dim:#ff6b6b22;--flask-red-mid:#ff6b6b55;
+  --fast-teal:#009688;--fast-teal-light:#4db6ac;--fast-teal-dim:#00968822;--fast-teal-mid:#00968855;
+  --purple:#c084fc;--purple-dim:#c084fc22;--purple-mid:#c084fc55;
+  --gold:#f59e0b;--gold-dim:#f59e0b22;--gold-mid:#f59e0b55;
+  --text:#e2e2ee;--text2:#7a7a95;--text3:#44445a;
+  --mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;
+  --r:6px;--rl:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh}
+.page{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* snake decoration */
+.snake-bar{height:3px;background:linear-gradient(90deg,var(--py-blue),var(--py-yellow),var(--django-green-light),var(--flask-red),var(--fast-teal-light),var(--purple),var(--gold));margin-bottom:2rem;border-radius:99px;opacity:0.7}
+
+/* header */
+.header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.hrow{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.title h1{font-family:var(--mono);font-size:22px;font-weight:400;margin-bottom:6px;line-height:1.3}
+.title h1 .py{color:var(--py-yellow)}
+.title h1 .arrow{color:var(--text3)}
+.title h1 .fw{color:var(--py-blue)}
+.title p{font-size:13px;color:var(--text2);max-width:520px;line-height:1.6}
+.frameworks{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.fw-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:99px;border:1px solid}
+
+.reset-btn{font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s;white-space:nowrap;align-self:flex-start;margin-top:4px}
+.reset-btn:hover{border-color:var(--flask-red);color:var(--flask-red)}
+
+/* progress */
+.prog-row{display:flex;justify-content:space-between;margin-bottom:7px}
+.prog-row span{font-family:var(--mono);font-size:12px;color:var(--text2)}
+.prog-row .pct{color:var(--py-yellow);font-weight:500}
+.prog-track{height:4px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:1rem}
+.prog-fill{height:4px;border-radius:99px;background:linear-gradient(90deg,var(--py-blue),var(--py-yellow));transition:width .5s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px #ffd34344}
+.phase-dots{display:flex;gap:10px;flex-wrap:wrap}
+.pdot{font-family:var(--mono);font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.pdot span.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+
+/* tabs */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:var(--r);border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s;white-space:nowrap}
+.tab:hover{border-color:var(--border2);color:var(--text2)}
+.tab.active{background:var(--gold-dim);border-color:var(--gold-mid);color:var(--gold)}
+
+/* detail */
+.detail{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);padding:1.25rem 1.5rem;margin-bottom:1.5rem;animation:slideIn .15s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.d-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:1rem;flex-wrap:wrap}
+.d-badge{font-family:var(--mono);font-size:10px;font-weight:500;padding:4px 10px;border-radius:var(--r);white-space:nowrap;flex-shrink:0}
+.d-title{font-size:15px;font-weight:500;color:var(--text);line-height:1.4}
+.d-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem}
+.dtag{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:var(--r);border:1px solid var(--border2);color:var(--text2);background:var(--surface2)}
+.d-section h4{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.task-list{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:1rem}
+.task-list li{font-size:13px;color:var(--text2);padding-left:18px;position:relative;line-height:1.5}
+.task-list li::before{content:"›";position:absolute;left:0;color:var(--py-yellow);font-family:var(--mono);font-size:16px;line-height:1.2}
+.d-btns{display:flex;gap:7px;flex-wrap:wrap;margin-top:.75rem}
+.d-btns button{font-family:var(--mono);font-size:11px;padding:6px 13px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s}
+.d-btns button:hover{color:var(--text);border-color:var(--border2)}
+.btn-done{background:var(--gold-dim)!important;border-color:var(--gold-mid)!important;color:var(--gold)!important}
+.btn-close{margin-left:auto}
+
+/* phases */
+.phase-block{margin-bottom:2.5rem}
+.ph-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.ph-label{font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 10px;border-radius:99px}
+.ph-name{font-size:14px;color:var(--text);flex:1;min-width:0}
+.ph-meta{display:flex;align-items:center;gap:12px}
+.ph-count{font-family:var(--mono);font-size:11px}
+.ph-range{font-family:var(--mono);font-size:11px;color:var(--text3)}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:7px;margin-bottom:1rem}
+.card{border:1px solid var(--border);border-radius:var(--r);padding:10px 11px;cursor:pointer;transition:all .15s;background:var(--surface);position:relative}
+.card:hover{border-color:var(--border2);background:var(--surface2)}
+.card.done{border-color:#44b78b55;background:#44b78b11}
+.card.done .c-num{color:var(--django-green-light)}
+.card.done .c-topic{color:var(--django-green-light);opacity:.85}
+.card.sel{outline:2px solid var(--py-blue);outline-offset:-1px}
+.c-num{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px}
+.c-topic{font-size:12px;color:var(--text2);line-height:1.4}
+.c-fw{font-family:var(--mono);font-size:9px;margin-top:5px;padding:1px 5px;border-radius:3px;display:inline-block}
+.c-check{position:absolute;top:8px;right:8px;width:14px;height:14px;border-radius:50%;background:var(--django-green-light);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.card.done .c-check{opacity:1}
+.c-check svg{width:8px;height:8px;stroke:#000;stroke-width:3;fill:none}
+
+/* milestone */
+.milestone{font-family:var(--mono);font-size:12px;padding:10px 14px;border-left:2px solid;border-radius:0 var(--r) var(--r) 0;background:var(--surface2);line-height:1.6;color:var(--text2)}
+.milestone strong{font-weight:500}
+
+/* framework legend */
+.fw-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1.5rem;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r)}
+.fw-legend span{font-family:var(--mono);font-size:11px;display:flex;align-items:center;gap:5px;color:var(--text2)}
+.fw-dot{width:8px;height:8px;border-radius:50%}
+
+@media(max-width:520px){.grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.ph-name{display:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="snake-bar"></div>
+
+  <div class="header">
+    <div class="hrow">
+      <div class="title">
+        <h1><span class="py">python</span><span class="arrow"> → </span><span class="fw">backend engineering</span></h1>
+        <p>60-day roadmap covering Python fundamentals, Django (full-stack MVC), Flask (micro-framework), and FastAPI (async APIs) — from beginner to senior backend engineer.</p>
+        <div class="frameworks">
+          <span class="fw-badge" style="color:#ffd343;border-color:#ffd34355;background:#ffd34311">Python 3.12+</span>
+          <span class="fw-badge" style="color:#44b78b;border-color:#44b78b55;background:#44b78b11">Django 5</span>
+          <span class="fw-badge" style="color:#ff6b6b;border-color:#ff6b6b55;background:#ff6b6b11">Flask 3</span>
+          <span class="fw-badge" style="color:#4db6ac;border-color:#4db6ac55;background:#4db6ac11">FastAPI</span>
+        </div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">reset progress</button>
+    </div>
+    <div class="prog-row"><span id="plabel">0 / 60 days completed</span><span class="pct" id="ppct">0%</span></div>
+    <div class="prog-track"><div class="prog-fill" id="pbar" style="width:0%"></div></div>
+    <div class="phase-dots" id="pdots"></div>
+  </div>
+
+  <div class="fw-legend">
+    <span><span class="fw-dot" style="background:var(--py-yellow)"></span>Python core</span>
+    <span><span class="fw-dot" style="background:var(--django-green-light)"></span>Django</span>
+    <span><span class="fw-dot" style="background:var(--flask-red)"></span>Flask</span>
+    <span><span class="fw-dot" style="background:var(--fast-teal-light)"></span>FastAPI</span>
+    <span><span class="fw-dot" style="background:var(--purple)"></span>DevOps / Infra</span>
+    <span><span class="fw-dot" style="background:var(--gold)"></span>Senior / Architecture</span>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="detail-area"></div>
+  <div id="phase-area"></div>
+</div>
+
+<script>
+const FW_COLORS = {
+  "Python":   {bg:"#ffd34311",border:"#ffd34344",text:"#ffd343"},
+  "Django":   {bg:"#44b78b11",border:"#44b78b44",text:"#44b78b"},
+  "Flask":    {bg:"#ff6b6b11",border:"#ff6b6b44",text:"#ff6b6b"},
+  "FastAPI":  {bg:"#4db6ac11",border:"#4db6ac44",text:"#4db6ac"},
+  "All":      {bg:"#c084fc11",border:"#c084fc44",text:"#c084fc"},
+};
+
+const PHASES = [
+  {
+    id:"p1", label:"Phase 1", name:"Python Foundations", range:"Days 1–10",
+    color:"#ffd343", dim:"#ffd34322", mid:"#ffd34355",
+    desc:"Python syntax, OOP, async, type hints, testing, and dev tooling",
+    milestone:"Solid Python fundamentals. Can write clean, typed, tested Python scripts and modules.",
+    days:[
+      {d:1, fw:"Python", topic:"Python environment + syntax",
+       tags:["pyenv","venv","pip","PEP8","Data types","Control flow","Functions"],
+       tasks:["Set up pyenv + virtualenv workflow","Understand Python's memory model","f-strings, comprehensions, unpacking","Build: CLI number guessing game"]},
+      {d:2, fw:"Python", topic:"Data structures + algorithms in Python",
+       tags:["Lists","Dicts","Sets","Tuples","Stacks","Queues","Heapq","Sorting"],
+       tasks:["Built-in data structure performance","collections module: Counter, defaultdict, deque","Implement stack, queue, priority queue","Build: in-memory task scheduler"]},
+      {d:3, fw:"Python", topic:"OOP — classes, inheritance, protocols",
+       tags:["Classes","Inheritance","Dunder methods","Dataclasses","Abstract classes","Protocols"],
+       tasks:["Class design with __repr__, __eq__, __hash__","Dataclasses vs TypedDict vs NamedTuple","Abstract base classes and duck typing","Build: domain model for an ecommerce app"]},
+      {d:4, fw:"Python", topic:"Functional Python + itertools",
+       tags:["map/filter","lambda","itertools","functools","Generators","Decorators","Context managers"],
+       tasks:["Generators and lazy evaluation","functools: lru_cache, partial, wraps","Write reusable decorators","Build: retry decorator and rate-limit decorator"]},
+      {d:5, fw:"Python", topic:"Type hints + mypy + pydantic",
+       tags:["Type hints","mypy","Pydantic v2","BaseModel","Validators","Generic types"],
+       tasks:["Annotate all functions strictly","Run mypy in strict mode","Pydantic for data validation and parsing","Build: typed configuration loader with Pydantic"]},
+      {d:6, fw:"Python", topic:"File I/O, JSON, CSV, environment",
+       tags:["pathlib","json","csv","dotenv","configparser","Logging","argparse"],
+       tasks:["pathlib for all file operations","Structured logging with logging module","CLI tool with argparse or Typer","Build: CSV to JSON converter CLI tool"]},
+      {d:7, fw:"Python", topic:"Async Python — asyncio",
+       tags:["asyncio","async/await","Tasks","Gather","Semaphore","Event loop","aiofiles"],
+       tasks:["Event loop and coroutine mechanics","asyncio.gather for concurrent tasks","Async context managers","Build: async web scraper with aiohttp"]},
+      {d:8, fw:"Python", topic:"Testing with pytest",
+       tags:["pytest","fixtures","parametrize","mocking","coverage","TDD","hypothesis"],
+       tasks:["Fixtures: scope, autouse, factories","parametrize for table-driven tests","Mock with unittest.mock and pytest-mock","Build: full test suite for your domain models"]},
+      {d:9, fw:"Python", topic:"Packaging + tooling",
+       tags:["Poetry","pyproject.toml","ruff","black","pre-commit","Makefile","uv"],
+       tasks:["Poetry project setup and publishing","Ruff for fast linting + formatting","pre-commit hooks for code quality","Build: well-packaged Python library"]},
+      {d:10, fw:"Python", topic:"Python internals + performance",
+       tags:["GIL","CPython","cProfile","memory_profiler","multiprocessing","Cython basics"],
+       tasks:["Understand the GIL and its implications","Profile CPU and memory with cProfile","Threading vs multiprocessing vs asyncio","Build: benchmark 3 approaches for a CPU task"]},
+    ]
+  },
+  {
+    id:"p2", label:"Phase 2", name:"Django — Full-Stack MVC", range:"Days 11–22",
+    color:"#44b78b", dim:"#44b78b22", mid:"#44b78b55",
+    desc:"Django ORM, views, DRF, auth, admin, Celery, and production Django",
+    milestone:"Full Django REST API with DRF, auth, Celery tasks, and admin deployed to production.",
+    days:[
+      {d:11, fw:"Django", topic:"Django project structure + MVT",
+       tags:["django-admin","Apps","Settings","URLconf","MTV pattern","manage.py"],
+       tasks:["Start project with best-practice layout","Split settings: base/dev/prod","URL routing: path, include, re_path","Build: multi-app Django project skeleton"]},
+      {d:12, fw:"Django", topic:"Django ORM + models",
+       tags:["Models","Fields","Migrations","QuerySet","select_related","prefetch_related","Signals"],
+       tasks:["Model relationships: FK, M2M, OneToOne","QuerySet API: filter, annotate, aggregate","Avoid N+1 with select_related/prefetch_related","Build: ecommerce data models + queries"]},
+      {d:13, fw:"Django", topic:"Django views + templates",
+       tags:["FBV","CBV","TemplateView","Generic views","Context","Template tags","Forms"],
+       tasks:["Function-based vs class-based views","Django forms and ModelForms","Template inheritance and custom tags","Build: blog with CRUD views and templates"]},
+      {d:14, fw:"Django", topic:"Django REST Framework (DRF) fundamentals",
+       tags:["Serializers","ModelSerializer","APIView","ViewSet","Router","Permissions","Throttling"],
+       tasks:["Serializer validation and nested relations","ViewSets + DefaultRouter","Permission classes: IsAuthenticated, IsAdminUser","Build: product catalog REST API with DRF"]},
+      {d:15, fw:"Django", topic:"DRF auth — JWT + sessions",
+       tags:["djangorestframework-simplejwt","Token auth","Session auth","dj-rest-auth","OAuth"],
+       tasks:["JWT access + refresh token with simplejwt","Login, register, logout endpoints","Custom user model best practices","Build: full auth API (register, login, refresh, logout)"]},
+      {d:16, fw:"Django", topic:"DRF advanced — filtering, pagination, versioning",
+       tags:["django-filter","SearchFilter","OrderingFilter","Cursor pagination","API versioning"],
+       tasks:["django-filter for query param filtering","Custom pagination classes","URL-based and header-based versioning","Build: filterable, sortable, paginated product API"]},
+      {d:17, fw:"Django", topic:"Django admin customization",
+       tags:["ModelAdmin","list_display","actions","Inline","Custom views","django-unfold"],
+       tasks:["Custom list_display and filters","Admin actions for bulk operations","Inline models for related data","Build: fully customized admin for a SaaS app"]},
+      {d:18, fw:"Django", topic:"Django signals + middleware",
+       tags:["post_save","pre_delete","Middleware","Request cycle","Custom middleware","Audit logs"],
+       tasks:["Signal pitfalls and best practices","Write request-logging middleware","Middleware order and performance","Build: audit log with signals + middleware"]},
+      {d:19, fw:"Django", topic:"Celery + async tasks",
+       tags:["Celery","Redis broker","Beat scheduler","Task retry","Chaining","Monitoring","Flower"],
+       tasks:["Celery setup with Redis + Django","Periodic tasks with Celery Beat","Retry logic with exponential backoff","Build: email queue + scheduled report job"]},
+      {d:20, fw:"Django", topic:"Django caching + performance",
+       tags:["Cache framework","Redis cache","per-view cache","QuerySet cache","Debug Toolbar","django-silk"],
+       tasks:["Configure Redis as Django cache backend","Cache expensive QuerySet results","Django Debug Toolbar for profiling","Build: optimized dashboard with caching layer"]},
+      {d:21, fw:"Django", topic:"Django testing",
+       tags:["TestCase","APITestCase","Factory Boy","Faker","pytest-django","Coverage"],
+       tasks:["pytest-django fixtures and DB access","Factory Boy for test data","APITestCase for DRF endpoints","Build: full test suite for your DRF API"]},
+      {d:22, fw:"Django", topic:"Production Django",
+       tags:["Gunicorn","WhiteNoise","django-storages","S3","Health checks","12-factor","HTTPS"],
+       tasks:["Gunicorn config for production","Static files with WhiteNoise + S3","django-storages for media uploads","Build: production-ready Django deployment checklist"]},
+    ]
+  },
+  {
+    id:"p3", label:"Phase 3", name:"Flask — Micro-Framework Mastery", range:"Days 23–32",
+    color:"#ff6b6b", dim:"#ff6b6b22", mid:"#ff6b6b55",
+    desc:"Flask application factory, blueprints, SQLAlchemy, auth, testing, and production Flask",
+    milestone:"Modular Flask API with blueprints, SQLAlchemy, JWT auth, and test coverage deployed.",
+    days:[
+      {d:23, fw:"Flask", topic:"Flask fundamentals + application factory",
+       tags:["Application factory","Blueprints","Config","Extensions","Request context","App context"],
+       tasks:["create_app() factory pattern","Blueprint registration for modularity","Config classes: Dev, Test, Prod","Build: multi-blueprint Flask app skeleton"]},
+      {d:24, fw:"Flask", topic:"Routing, views, and request handling",
+       tags:["route()","Methods","URL converters","request object","g object","before_request","after_request"],
+       tasks:["URL converters: int, float, string, path","before_request / after_request hooks","request.json, request.form, request.files","Build: CRUD REST API with Flask routing"]},
+      {d:25, fw:"Flask", topic:"SQLAlchemy + Flask-SQLAlchemy",
+       tags:["Models","Session","Relationships","Migrations","Alembic","Query API","2.0 style"],
+       tasks:["SQLAlchemy 2.0 declarative models","Flask-Migrate with Alembic","Eager vs lazy loading relationships","Build: Flask app with full ORM data layer"]},
+      {d:26, fw:"Flask", topic:"Flask-Marshmallow + validation",
+       tags:["Marshmallow","Schema","Serialization","Deserialization","Validation","Nested schemas"],
+       tasks:["Schema definition and nesting","Custom validators","Serialize ORM objects to JSON","Build: validated request/response schemas"]},
+      {d:27, fw:"Flask", topic:"Authentication — JWT with Flask",
+       tags:["Flask-JWT-Extended","flask-login","Token refresh","Protected routes","Token blocklist"],
+       tasks:["Flask-JWT-Extended access + refresh tokens","Token blocklist for logout","Role-based decorators (@admin_required)","Build: complete auth system with Flask"]},
+      {d:28, fw:"Flask", topic:"Flask extensions ecosystem",
+       tags:["Flask-Mail","Flask-Caching","Flask-Limiter","Flask-CORS","Flask-SocketIO","Flask-Admin"],
+       tasks:["Flask-Caching with Redis backend","Flask-Limiter for rate limiting","Flask-CORS configuration","Build: full-featured API with 4+ extensions"]},
+      {d:29, fw:"Flask", topic:"Error handling + logging",
+       tags:["errorhandler","abort()","Custom errors","Structured logging","Sentry","Request ID"],
+       tasks:["Global error handlers for 400, 404, 500","Structured JSON error responses","Request-scoped correlation IDs","Build: consistent error handling layer"]},
+      {d:30, fw:"Flask", topic:"Flask testing",
+       tags:["test_client","pytest-flask","Fixtures","DB isolation","Mocking","Coverage"],
+       tasks:["pytest-flask test_client setup","DB test isolation with transactions","Mock external services","Build: complete test suite for your Flask API"]},
+      {d:31, fw:"Flask", topic:"Flask async + background tasks",
+       tags:["async views","Celery + Flask","RQ","Threading","Async blueprints"],
+       tasks:["Async view functions in Flask 2+","Celery integration with Flask","Simple task queue with RQ + Redis","Build: async email and PDF generation jobs"]},
+      {d:32, fw:"Flask", topic:"Production Flask",
+       tags:["Gunicorn","uWSGI","Nginx","docker-compose","Health check","Monitoring"],
+       tasks:["Gunicorn workers and config","Nginx reverse proxy for Flask","Health check endpoint","Build: Dockerized Flask + Nginx + PostgreSQL stack"]},
+    ]
+  },
+  {
+    id:"p4", label:"Phase 4", name:"FastAPI — Modern Async APIs", range:"Days 33–44",
+    color:"#4db6ac", dim:"#4db6ac22", mid:"#4db6ac55",
+    desc:"FastAPI, Pydantic v2, async SQLAlchemy, auth, WebSockets, background tasks, and testing",
+    milestone:"Production-grade async FastAPI application with full test coverage, docs, and deployment.",
+    days:[
+      {d:33, fw:"FastAPI", topic:"FastAPI fundamentals",
+       tags:["Path operations","Request/response","Pydantic models","Auto docs","Dependency injection","ASGI"],
+       tasks:["Understand ASGI vs WSGI","Path params, query params, request body","Automatic OpenAPI + Swagger UI","Build: product catalog API with FastAPI"]},
+      {d:34, fw:"FastAPI", topic:"Pydantic v2 deep dive",
+       tags:["BaseModel","Field validators","model_validator","Computed fields","Serialization","Settings"],
+       tasks:["Field-level and model-level validators","pydantic-settings for environment config","Serialization aliases and exclude fields","Build: fully typed request/response models"]},
+      {d:35, fw:"FastAPI", topic:"Dependency injection system",
+       tags:["Depends()","Sub-dependencies","Yield dependencies","Lifespan","Override in tests"],
+       tasks:["Build reusable DB session dependency","Yield dependencies for cleanup","Override dependencies in tests","Build: auth dependency chain (get_current_user)"]},
+      {d:36, fw:"FastAPI", topic:"Async SQLAlchemy + databases",
+       tags:["async SQLAlchemy","asyncpg","Alembic","Repository pattern","Connection pool"],
+       tasks:["Async engine and session setup","Repository pattern for DB access","Async Alembic migrations","Build: async data access layer for FastAPI"]},
+      {d:37, fw:"FastAPI", topic:"Authentication + authorization",
+       tags:["OAuth2PasswordBearer","JWT","passlib","bcrypt","Scopes","API keys","Rate limiting"],
+       tasks:["OAuth2 password flow with JWT","Password hashing with passlib + bcrypt","Scopes-based authorization","Build: full auth + RBAC for a SaaS API"]},
+      {d:38, fw:"FastAPI", topic:"Background tasks + Celery",
+       tags:["BackgroundTasks","Celery","ARQ","Async worker","Task chaining","Monitoring"],
+       tasks:["FastAPI BackgroundTasks for lightweight jobs","Celery with Redis for heavy async work","ARQ as a modern async alternative","Build: email queue + file processing pipeline"]},
+      {d:39, fw:"FastAPI", topic:"WebSockets with FastAPI",
+       tags:["WebSocket","Connection manager","Rooms","Broadcast","Auth over WS","Disconnect handling"],
+       tasks:["WebSocket endpoint lifecycle","Connection manager for multiple clients","Authenticate WebSocket connections","Build: real-time notification / chat system"]},
+      {d:40, fw:"FastAPI", topic:"File uploads + streaming",
+       tags:["UploadFile","StreamingResponse","FileResponse","S3 upload","Chunked upload"],
+       tasks:["Single and multi-file uploads","Stream large file downloads","Upload directly to S3 with presigned URLs","Build: file upload API with virus-scan hook"]},
+      {d:41, fw:"FastAPI", topic:"Middleware + advanced routing",
+       tags:["BaseHTTPMiddleware","CORS","Gzip","Trusted hosts","APIRouter","Prefix","Tags"],
+       tasks:["Write request logging middleware","CORS, GZip, TrustedHost middleware","Router prefix and tag organization","Build: modular router structure for a large API"]},
+      {d:42, fw:"FastAPI", topic:"Testing FastAPI",
+       tags:["TestClient","AsyncClient","httpx","pytest-asyncio","Fixtures","DB override"],
+       tasks:["Sync TestClient and async AsyncClient","Override DB dependency for tests","pytest-asyncio for async test functions","Build: full test suite with auth and DB tests"]},
+      {d:43, fw:"FastAPI", topic:"Caching + performance",
+       tags:["fastapi-cache2","Redis","Response caching","ETag","Compression","Profiling"],
+       tasks:["Cache endpoints with fastapi-cache2","Redis-based response caching","ETag and conditional requests","Build: optimized high-traffic endpoint"]},
+      {d:44, fw:"FastAPI", topic:"Production FastAPI",
+       tags:["Uvicorn","Gunicorn+Uvicorn","Docker","Health check","Graceful shutdown","Sentry"],
+       tasks:["Gunicorn + UvicornWorker setup","Lifespan events for startup/shutdown","Sentry integration for error tracking","Build: production Dockerfile for FastAPI"]},
+    ]
+  },
+  {
+    id:"p5", label:"Phase 5", name:"DevOps, Databases & Infra", range:"Days 45–52",
+    color:"#c084fc", dim:"#c084fc22", mid:"#c084fc55",
+    desc:"PostgreSQL deep dive, Redis, Docker, CI/CD, cloud deployment, and observability",
+    milestone:"Backend deployed to cloud with CI/CD, structured logging, monitoring, and caching in place.",
+    days:[
+      {d:45, fw:"All", topic:"PostgreSQL deep dive",
+       tags:["Indexes","EXPLAIN ANALYZE","Partitioning","JSONB","Full-text search","pg_trgm","Connection pool"],
+       tasks:["Analyze and fix slow queries with EXPLAIN","JSONB for semi-structured data","pg_trgm for fuzzy text search","Build: optimized schema for a high-traffic app"]},
+      {d:46, fw:"All", topic:"Redis — caching, queues, pub/sub",
+       tags:["redis-py","aioredis","Sorted sets","Pub/Sub","Streams","Lua scripts","Sentinel"],
+       tasks:["Redis data structures for real use cases","Pub/Sub for simple event broadcasting","Redis Streams for durable message log","Build: leaderboard with sorted sets"]},
+      {d:47, fw:"All", topic:"Docker + docker-compose",
+       tags:["Dockerfile","Multi-stage","docker-compose","Volumes","Networks","Health checks","docker-compose.override"],
+       tasks:["Optimized Python Dockerfile (multi-stage)","docker-compose for full local dev stack","Environment-specific compose files","Build: Python + PostgreSQL + Redis + Nginx compose"]},
+      {d:48, fw:"All", topic:"CI/CD with GitHub Actions",
+       tags:["Workflows","pytest in CI","mypy","ruff","Docker build","Deploy on merge","Secrets"],
+       tasks:["Lint + type-check + test in CI","Docker build and push to registry","Deploy to cloud on merge to main","Build: complete CI/CD pipeline for your project"]},
+      {d:49, fw:"All", topic:"Cloud deployment",
+       tags:["Railway","Render","Fly.io","AWS EC2","Heroku","SSL","Managed Postgres","Env vars"],
+       tasks:["Deploy Django or FastAPI to Railway/Render","Managed PostgreSQL and Redis in cloud","Zero-downtime deployment strategy","Build: production deployment with custom domain + SSL"]},
+      {d:50, fw:"All", topic:"Structured logging + observability",
+       tags:["structlog","Loki","Datadog","Correlation IDs","JSON logs","OpenTelemetry","Distributed tracing"],
+       tasks:["Structured JSON logging with structlog","Correlation IDs across services","OpenTelemetry basics for tracing","Build: logging middleware for all three frameworks"]},
+      {d:51, fw:"All", topic:"Monitoring + alerting",
+       tags:["Prometheus","Grafana","Sentry","Uptime","Custom metrics","Alerting rules","APM"],
+       tasks:["Expose /metrics with prometheus-client","Grafana dashboard for request latency","Sentry for exception tracking","Build: alerting on error rate and latency thresholds"]},
+      {d:52, fw:"All", topic:"Security hardening",
+       tags:["OWASP Top 10","SQL injection","Mass assignment","HTTPS","Dependency audit","Secrets rotation","CSP"],
+       tasks:["Audit all three frameworks against OWASP","safety + pip-audit for dependency scanning","Prevent mass assignment in DRF and Pydantic","Build: security checklist for each framework"]},
+    ]
+  },
+  {
+    id:"p6", label:"Phase 6", name:"Senior Architecture & Interviews", range:"Days 53–60",
+    color:"#f59e0b", dim:"#f59e0b22", mid:"#f59e0b55",
+    desc:"System design, microservices, event-driven patterns, DX, and full interview readiness",
+    milestone:"Senior-ready Python backend engineer with two production projects and interview confidence.",
+    days:[
+      {d:53, fw:"All", topic:"Application architecture patterns",
+       tags:["Clean architecture","Repository pattern","Service layer","CQRS","DDD basics","Hexagonal arch"],
+       tasks:["Layered: routers → services → repositories","Dependency injection without a framework","Domain models separate from DB models","Refactor an app to clean architecture"]},
+      {d:54, fw:"All", topic:"Microservices with Python",
+       tags:["Service decomposition","API gateway","gRPC","httpx","Service mesh basics","Event-driven"],
+       tasks:["When to split a monolith","Sync comms with httpx between services","Async comms with message queues","Build: split a monolith into 2 Python services"]},
+      {d:55, fw:"All", topic:"Event-driven architecture",
+       tags:["Kafka","RabbitMQ","Celery","Outbox pattern","Sagas","Event sourcing","CQRS"],
+       tasks:["Produce and consume Kafka events with aiokafka","Outbox pattern for reliable event publishing","Saga choreography vs orchestration","Build: order processing event flow"]},
+      {d:56, fw:"All", topic:"Advanced caching + data patterns",
+       tags:["Cache invalidation","Write-through","Cache stampede","CDN","Materialized views","Read replicas"],
+       tasks:["Cache invalidation strategies compared","Prevent stampede with Redis lock","Database read replicas for scale","Build: multi-layer cache for a feed API"]},
+      {d:57, fw:"All", topic:"Backend system design practice",
+       tags:["URL shortener","Twitter clone","Notification system","Rate limiter","File storage","Leaderboard"],
+       tasks:["Design a URL shortener at scale","Design a real-time notification system","Design a rate limiter service","Practice structured system design answers (10 frameworks)"]},
+      {d:58, fw:"All", topic:"Framework comparison + decision making",
+       tags:["Django vs Flask vs FastAPI","When to use each","Trade-offs","Performance","Team size","Use cases"],
+       tasks:["Write a decision matrix for all 3 frameworks","Benchmark each for a simple CRUD endpoint","Document trade-offs in an ADR","Build: same feature in all 3 — compare DX and performance"]},
+      {d:59, fw:"All", topic:"Interview preparation",
+       tags:["Python internals","OOP design","System design","Coding problems","Behavioural","Django/Flask/FastAPI deep Q&A"],
+       tasks:["Top 50 Python backend interview questions","2 system design practice sessions","LeetCode: 10 mediums (graphs, DP, strings)","Polish GitHub profile and resume"]},
+      {d:60, fw:"All", topic:"Final project demo + portfolio polish",
+       tags:["Live demo","Architecture diagram","Case study","Video walkthrough","README","ADRs","Lighthouse/load test"],
+       tasks:["Record 5-minute demo of your main project","Write architecture decision records","Add load test results to README","Final mock interview: technical + system design + behavioural"]},
+    ]
+  }
+];
+
+const KEY="py60_v1";
+let done=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
+let active="all";
+let sel=null;
+
+function save(){localStorage.setItem(KEY,JSON.stringify([...done]))}
+
+function renderProgress(){
+  const pct=Math.round((done.size/60)*100);
+  document.getElementById("pbar").style.width=pct+"%";
+  document.getElementById("plabel").textContent=`${done.size} / 60 days completed`;
+  document.getElementById("ppct").textContent=pct+"%";
+  document.getElementById("pdots").innerHTML=PHASES.map(p=>{
+    const pd=p.days.filter(d=>done.has(d.d)).length;
+    return `<span class="pdot"><span class="dot" style="background:${p.color}"></span><span style="color:${p.color}">${p.label}</span><span>${pd}/${p.days.length}</span></span>`;
+  }).join("");
+}
+
+function renderTabs(){
+  const c=document.getElementById("tabs");
+  c.innerHTML=`<button class="tab ${active==='all'?'active':''}" onclick="setPhase('all')">>>> all phases</button>`+
+    PHASES.map(p=>`<button class="tab ${active===p.id?'active':''}" style="${active===p.id?`background:${p.dim};border-color:${p.mid};color:${p.color}`:''}" onclick="setPhase('${p.id}')">${p.label}: ${p.name}</button>`).join("");
+}
+
+function renderDetail(){
+  const a=document.getElementById("detail-area");
+  if(!sel){a.innerHTML="";return}
+  let fd=null,fp=null;
+  for(const p of PHASES)for(const d of p.days)if(d.d===sel){fd=d;fp=p;break}
+  if(!fd){a.innerHTML="";return}
+  const id=done.has(sel);
+  const fwc=FW_COLORS[fd.fw]||FW_COLORS["All"];
+  a.innerHTML=`<div class="detail">
+    <div class="d-head">
+      <span class="d-badge" style="background:${fp.dim};color:${fp.color};border:1px solid ${fp.mid}">Day ${sel} · ${fp.name}</span>
+      <span class="d-badge" style="background:${fwc.bg};color:${fwc.text};border:1px solid ${fwc.border}">${fd.fw}</span>
+      <div class="d-title">${fd.topic}</div>
+    </div>
+    <div class="d-tags">${fd.tags.map(t=>`<span class="dtag">${t}</span>`).join("")}</div>
+    <div class="d-section">
+      <h4>Hands-on tasks</h4>
+      <ul class="task-list">${fd.tasks.map(t=>`<li>${t}</li>`).join("")}</ul>
+    </div>
+    <div class="d-btns">
+      <button class="${id?'btn-done':''}" onclick="toggleDay(${sel})">${id?'✓ done — mark incomplete':'Mark as done'}</button>
+      <button onclick="window.open('https://claude.ai/new?q='+encodeURIComponent('Give me a complete Python backend study guide and project tasks for Day ${sel}: ${fd.topic} (${fd.fw}). Include code examples, best practices, and common interview questions.'),'_blank')">study guide →</button>
+      <button onclick="window.open('https://claude.ai/new?q='+encodeURIComponent('Give me 10 Python backend interview questions for: ${fd.topic} (${fd.fw}), with detailed answers and code examples.'),'_blank')">interview Q&A →</button>
+      <button class="btn-close" onclick="sel=null;renderDetail();renderPhases()">close ✕</button>
+    </div>
+  </div>`;
+}
+
+function renderPhases(){
+  const a=document.getElementById("phase-area");
+  const ps=active==="all"?PHASES:PHASES.filter(p=>p.id===active);
+  a.innerHTML=ps.map(p=>{
+    const pd=p.days.filter(d=>done.has(d.d)).length;
+    const cards=p.days.map(d=>{
+      const id=done.has(d.d);const is_sel=sel===d.d;
+      const fwc=FW_COLORS[d.fw]||FW_COLORS["All"];
+      return `<div class="card ${id?'done':''} ${is_sel?'sel':''}" onclick="selectDay(${d.d})">
+        <div class="c-num">day_${String(d.d).padStart(2,'0')}</div>
+        <div class="c-topic">${d.topic}</div>
+        <span class="c-fw" style="background:${fwc.bg};color:${fwc.text};border:1px solid ${fwc.border}">${d.fw}</span>
+        <div class="c-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+      </div>`;
+    }).join("");
+    return `<div class="phase-block">
+      <div class="ph-header">
+        <span class="ph-label" style="background:${p.dim};color:${p.color};border:1px solid ${p.mid}">${p.label}</span>
+        <span class="ph-name">${p.name} — ${p.desc}</span>
+        <div class="ph-meta">
+          <span class="ph-count" style="color:${p.color}">${pd}/${p.days.length}</span>
+          <span class="ph-range">${p.range}</span>
+        </div>
+      </div>
+      <div class="grid">${cards}</div>
+      <div class="milestone" style="border-color:${p.color}"><strong style="color:${p.color}">milestone ›</strong> ${p.milestone}</div>
+    </div>`;
+  }).join("");
+}
+
+function setPhase(id){active=id;renderTabs();renderPhases()}
+function selectDay(d){sel=sel===d?null:d;renderDetail();renderPhases()}
+function toggleDay(d){if(done.has(d))done.delete(d);else done.add(d);save();renderProgress();renderDetail();renderPhases()}
+function resetAll(){if(confirm("Reset all progress? This cannot be undone.")){done=new Set();save();sel=null;renderProgress();renderDetail();renderPhases()}}
+
+renderProgress();renderTabs();renderDetail();renderPhases();
+</script>
+</body>
+</html>
